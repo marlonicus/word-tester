@@ -1,0 +1,46 @@
+@import "variables/colors";
+
+:local {
+	.root {
+		position: absolute;
+		bottom: 0;
+		transform: translateY(100%);
+		padding: 20px;
+		border-radius: 20px;
+		width: calc(100% - 40px);
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		text-align: center;
+		transition: opacity 0.1s, transform 0.1s;
+	}
+
+	.correct {
+		composes: root;
+		background: $color3;
+		color: $black;
+	}
+
+	.incorrect {
+		composes: root;
+		color: $color2;
+		background: $color4;
+	}
+
+	.show {
+		transform: translateY(-20px);
+	}
+
+	.title {
+		$stroke-color: $black;
+		text-shadow:
+	    -1px -1px 0 $stroke-color,
+	    1px -1px 0 $stroke-color,
+	    -1px 1px 0 $stroke-color,
+	    1px 1px 0 $stroke-color;
+		color: white;
+		font-size: 40px;
+		letter-spacing: 0.9px;
+		margin-bottom: 20px;
+	}
+}

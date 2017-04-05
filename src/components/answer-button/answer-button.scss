@@ -1,0 +1,19 @@
+@import "variables/colors";
+
+:local {
+	.root {
+		padding: 20px;
+		outline: none;
+		border: none;
+		border-radius: 10px;
+		background: $color1;
+		cursor: pointer;
+		text-transform: capitalize;
+		width: 100%;
+		font-size: 15px;
+
+		&:hover {
+			background: $color5;
+		}
+	}
+}

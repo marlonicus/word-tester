@@ -1,0 +1,8 @@
+{
+  "env": {
+    "jest": true // Adds all the jest testing global variables
+  },
+  "globals": {
+    "test": true // Because apparently the 'jest' env above doesn't fully work :)...
+  }
+}

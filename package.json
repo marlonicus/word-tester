@@ -1,0 +1,84 @@
+{
+  "name": "word-tester",
+  "version": "1.0.0",
+  "description": "Basic multiple choide quiz app",
+  "scripts": {
+    "start": "webpack-dev-server --open",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
+    "test": "cross-env NODE_ENV=test jest",
+    "test:tdd": "cross-env NODE_ENV=test jest --watch",
+    "test:coverage": "cross-env NODE_ENV=test jest --coverage",
+    "lint": "eslint -c .eslintrc src tests",
+    "install-githooks": "PPWD=$(pwd); cd ./.git/hooks; chmod +x $PPWD/.githooks/*; ln -sf $PPWD/.githooks/* ."
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!**/node_modules/**"
+    ],
+    "moduleDirectories": [
+      "<rootDir>/node_modules"
+    ],
+    "modulePaths": [
+      "<rootDir>/node_modules"
+    ],
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "testMatch": [
+      "**/tests/**/*.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "identity-obj-proxy"
+    },
+    "transform": {
+      ".js": "babel-jest",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/__config__/fileTransformer.js"
+    },
+    "setupFiles": [
+      "<rootDir>/tests/__config__/setup.js"
+    ],
+    "testURL": "http://localhost"
+  },
+  "contributors": [
+    "Marlonicus <marlonhubersmith@gmail.com>"
+  ],
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.7.6",
+    "babel-core": "^6.23.1",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.3.2",
+    "babel-plugin-react-require": "^3.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.2.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "6.5.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "cross-env": "^3.2.3",
+    "css-loader": "^0.26.2",
+    "eslint": "^3.17.0",
+    "eslint-plugin-react": "^6.10.0",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.10.1",
+    "html-webpack-plugin": "^2.28.0",
+    "node-sass": "^4.5.0",
+    "postcss-loader": "^1.3.3",
+    "sass-loader": "^6.0.2",
+    "style-loader": "^0.13.2",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1"
+  },
+  "optionalDependencies": {
+    "babel-jest": "^19.0.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^19.0.2",
+    "jsdom": "^9.11.0"
+  }
+}
