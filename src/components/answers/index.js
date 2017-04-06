@@ -9,26 +9,20 @@ export default class Answers extends Component {
 		answers: PropTypes.array,
 	}
 
-	getAnswerButton({ text, correct, index }) {
-		return (
-			<li key={index} className={styles.answer}>
-				<AnswerButton
-					text={text}
-					onClick={() => this.props.onAnswerClick({ correct })}
-				/>
-			</li>
-		)
-	}
-
-	renderAnswerButtons({ answers }) {
-		return answers.map(({ text, correct }, index) => this.getAnswerButton({ text, correct, index }))
-	}
-
 	render() {
 		const { answers } = this.props
 		return (
 			<ul className={styles.root}>
-				{ this.renderAnswerButtons({ answers }) }
+				{
+					answers.map(({ text, correct }, index) => (
+						<li key={`${text}${index}`} className={styles.answer}>
+							<AnswerButton
+								text={text}
+								onClick={() => this.props.onAnswerClick({ correct })}
+							/>
+						</li>
+					))
+				}
 			</ul>
 		)
 	}
