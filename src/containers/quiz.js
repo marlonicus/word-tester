@@ -21,10 +21,8 @@ export default class QuizContainer extends Component {
 		}
 	}
 
-	componentDidUpdate(prevProps) {
-		if (this.props.words && !prevProps.words) {
-			this.setRandomWord()
-		}
+	componentWillMount() {
+		this.setRandomWord()
 	}
 
 	setRandomWord() {

@@ -1,0 +1,39 @@
+@import "variables/easing";
+
+:local {
+	.root {
+		align-self: center;
+		width: 100%;
+	}
+
+	.title {
+		composes: global(rubberBand);
+		font-size: 30px;
+		text-align: center;
+	}
+}
+
+.loading {
+	animation: none;
+	transform-origin: center center;
+}
+
+.loading-appear {
+	@extend .loading;
+	transition: transform 300ms 50ms $ease-out-back;
+	transform: scale(0);
+}
+
+.loading-appear-active {
+	transform: scale(1);
+}
+
+.loading-leave {
+	@extend .loading;
+	transform: scale(1);
+}
+
+.loading-leave-active {
+	transition: transform 300ms $ease-in-back;
+	transform: scale(0);
+}
