@@ -20,7 +20,7 @@
 
 .loading-appear {
 	@extend .loading;
-	transition: transform 300ms 50ms $ease-out-back;
+	transition: transform 500ms 50ms $ease-out-back;
 	transform: scale(0);
 }
 
@@ -34,6 +34,6 @@
 }
 
 .loading-leave-active {
-	transition: transform 300ms $ease-in-back;
+	transition: transform 350ms $ease-in-back;
 	transform: scale(0);
 }

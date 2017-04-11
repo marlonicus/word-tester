@@ -1,4 +1,5 @@
-import { Component, PropTypes } from 'react'
+import { PropTypes } from 'mobx-react'
+import { Component } from 'react'
 
 import AnswerButton from '../answer-button'
 
@@ -6,7 +7,7 @@ import styles from './answers.scss'
 
 export default class Answers extends Component {
 	static propTypes = {
-		answers: PropTypes.array,
+		answers: PropTypes.observableArray,
 	}
 
 	render() {

@@ -1,63 +1,35 @@
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { observer } from 'mobx-react'
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import { Component, PropTypes } from 'react'
 
 import styles from './loading.scss'
 
+@observer
 export default class Loading extends Component {
-	static propTypes = {
-		finishedLoading: PropTypes.bool,
-		onLoadingAnimationComplete: PropTypes.func,
-	}
-
-	constructor(props) {
-		super(props)
-
-		this.state = {
-			shownEntryAnimation: false,
-			shouldShowExitAnimation: false,
-		}
-	}
-
-	componentDidMount() {
-		setTimeout(() => {
-			this.setState({
-				shownEntryAnimation: true,
-			})
-		}, 700)
+	componentWillMount() {
+		this.props.animationState.start(550)
 	}
 
 	componentDidUpdate(prevProps) {
-		if (!prevProps.finishedLoading && this.props.finishedLoading) {
-			this.setState({
-				shouldShowExitAnimation: true,
-			})
-		}
-
-		if (this.state.shouldShowExitAnimation && this.state.shownEntryAnimation) {
-			this.setState({
-				shouldShowExitAnimation: false,
-			})
-
-			setTimeout(() => {
-				this.props.onLoadingAnimationComplete()
-			}, 600)
+		if (prevProps.isLoading && !this.props.isLoading) {
+			this.props.animationState.finish(350)
 		}
 	}
 
 	render() {
-		const { shownEntryAnimation } = this.state
-		const { finishedLoading } = this.props
+		const { animationState } = this.props
+
 		return (
-			<ReactCSSTransitionGroup
+			<CSSTransitionGroup
 				transitionName={`loading`}
 				transitionLeave={true}
 				transitionAppear={true}
-				transitionLeaveTimeout={650}
-				transitionAppearTimeout={600}
-				transitionEnterTimeout={600}
+				transitionLeaveTimeout={350}
+				transitionAppearTimeout={550}
+				transitionEnter={false}
 				className={styles.root}>
-				{ !finishedLoading || !shownEntryAnimation ? <h1 className={styles.title}>Loading</h1> : null }
-			</ReactCSSTransitionGroup>
+				{ animationState.shouldShowElement ? <h1 className={styles.title}>Loading</h1> : null }
+			</CSSTransitionGroup>
 		)
 	}
 }
