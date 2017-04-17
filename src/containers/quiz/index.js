@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 import { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 
-import Loading from '../../components/loading'
+import Loading from '../../components/templates/loading'
+import Quiz from '../../components/templates/quiz'
 
 @inject(`quizStore`)
 @observer
@@ -17,15 +18,21 @@ export default class QuizContainer extends Component {
 	render() {
 		const { quizStore } = this.props
 		const uiStore = quizStore.ui
+		const { SCREEN_LOADING, SCREEN_QUIZ } = uiStore
 
-		if (uiStore.showLoadingScreen) {
-			return (
-				<Loading
-					animationState={uiStore.loadingAnimation}
-					isLoading={quizStore.isLoading} />
-			)
-		} else {
-			return <h1>Loaded!</h1>
+		switch (uiStore.screen) {
+			case SCREEN_LOADING:
+				return (
+					<Loading
+						animationState={uiStore.loadingAnimation}
+						isLoading={quizStore.isLoading} />
+				)
+			case SCREEN_QUIZ:
+				return (
+					<Quiz
+						store={quizStore}
+						viewStore={quizStore.ui} />
+				)
 		}
 	}
 }

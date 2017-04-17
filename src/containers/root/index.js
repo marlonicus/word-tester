@@ -1,17 +1,12 @@
 import { Component } from 'react'
 import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
+import Root from '../../components/templates/root'
+
 export default class RootContainer extends Component {
 	render() {
-		// TODO: Wrap with transition runner
-
 		return (
-			<ReactCSSTransitionGroup
-				transitionName="foo"
-				transitionEnterTimeout={1}
-				transitionLeaveTimeout={1}>
-				{ this.props.children }
-			</ReactCSSTransitionGroup>
+			<Root>{ this.props.children }</Root>
 		)
 	}
 }

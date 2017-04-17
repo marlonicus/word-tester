@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react'
 import { Component, PropTypes } from 'react'
 
-import Answers from '../answers'
-import Question from '../question'
-import Score from '../score'
-import Flash from '../flash'
+import Answers from '../../molecules/answers'
+import Question from '../../atoms/question'
+import Score from '../../atoms/score'
+import Flash from '../../atoms/flash'
 
 import styles from './quiz.scss'
 

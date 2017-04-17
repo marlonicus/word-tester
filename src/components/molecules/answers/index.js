@@ -1,7 +1,7 @@
 import { PropTypes } from 'mobx-react'
 import { Component } from 'react'
 
-import AnswerButton from '../answer-button'
+import AnswerButton from '../../atoms/answer-button'
 
 import styles from './answers.scss'
 
