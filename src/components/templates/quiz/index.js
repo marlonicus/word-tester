@@ -17,16 +17,20 @@ export default class Quiz extends Component {
 
 	onAnswerClick({correct}) {
 		this.props.store.setAnswer({ correct })
+	}
+
+	onFlashClick() {
+		this.props.store.hideFlash()
 		this.props.store.setNewQuestion()
 	}
 
 	render() {
 		const { store } = this.props
-		const { question, answers, score, showFlash, lastQuestion, testedWords, hideFlash } = store
+		const { question, answers, score, lastQuestion, testedWords, hideFlash, ui } = store
 
 		return (
 			<section className={styles.root}>
-				<Flash showFlash={showFlash} lastQuestion={lastQuestion} hideFlash={() => store.hideFlash()} />
+				<Flash showFlash={ui.shouldShowFlash} lastQuestion={lastQuestion} onClick={() => this.onFlashClick()} />
 				<Question text={question} />
 				<Answers answers={answers} onAnswerClick={({correct}) => this.onAnswerClick({correct})} />
 				<Score correct={score} answered={testedWords.length} />

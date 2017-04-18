@@ -6,6 +6,7 @@ export default class QuizUIStore {
 	SCREEN_QUIZ = `screnQuiz`
 
 	@observable loadingAnimation = new AnimationModel()
+	@observable shouldShowFlash = false
 
 	constructor(store) {
 		this.store = store

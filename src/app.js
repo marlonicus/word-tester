@@ -1,27 +1,28 @@
 import {
-	BrowserRouter as Router,
-	Route,
+	MemoryRouter as Router,
 	browserHistory,
+	Route,
 } from 'react-router-dom'
+
+require('./styles/main.scss')
+import { AppContainer } from 'react-hot-loader'
 
 import { Provider } from 'mobx-react'
 import RootContainer from './containers/root'
-import DonateContainer from './containers/donate'
+import AboutContainer from './containers/about'
 import QuizContainer from './containers/quiz'
-import QuizStore from './stores/quiz'
 
-const containerNode = document.getElementById(`container`)
-const quizStore = new QuizStore()
-
-const appRender = (
-	<Provider quizStore={quizStore}>
-		<Router>
-			<RootContainer>
-				<Route exact path="/" component={QuizContainer} />
-				<Route path="/donate" component={DonateContainer} />
-			</RootContainer>
-		</Router>
-	</Provider>
-)
-
-ReactDOM.render(appRender, containerNode)
+export default function({ quizStore }) {
+	return (
+		<AppContainer>
+			<Provider quizStore={quizStore}>
+				<Router>
+					<RootContainer>
+						<Route exact path="/" component={QuizContainer} />
+						<Route path="/about" component={AboutContainer} />
+					</RootContainer>
+				</Router>
+			</Provider>
+		</AppContainer>
+	)
+}

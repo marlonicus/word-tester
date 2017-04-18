@@ -3,7 +3,6 @@ const autoprefixer = require('autoprefixer')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const jsonLoader = require('json-loader')
 
 const Envs = {
 	DEV: 'development',
@@ -19,40 +18,27 @@ const ENV = (
 	Envs.DEV
 )
 
-const ASSET_OUTPUT_CONTEXT = `./assets`
-const ASSET_FILE_LOADER = {
-	loader: 'file-loader',
-	options: {
-		context: ASSET_OUTPUT_CONTEXT,
-		name: `[path][name].[ext]`,
-	},
-}
-
 const plugins = [
-	new webpack.ExtendedAPIPlugin(),
+	new webpack.HotModuleReplacementPlugin(),
+	// enable HMR globally
 
-	// Define global vars (helps for dead code elimination)
-	new webpack.DefinePlugin({
-		'process.env': {
-			'NODE_ENV': JSON.stringify(ENV),
-			'BUILD_NUMBER': JSON.stringify(process.env.GO_PIPELINE_LABEL),
-			'BUILD_DATE': JSON.stringify(new Date()),
-		},
-		DEV: ENV === 'development',
-		PROD: ENV === 'production',
-		TEST: ENV === 'test',
-	}),
+	new webpack.NamedModulesPlugin(),
+	// prints more readable module names in the browser console on HMR updates
 
 	// Uglify JS on prod
 	ENV === Envs.PROD ? new webpack.optimize.UglifyJsPlugin() : false,
 
 	// Extract styles into file
-	new ExtractTextPlugin(`styles.css`),
+	new ExtractTextPlugin({
+		filename: `styles.css`,
+		disable: true,
+	}),
 
 	// Generate our index page
 	new HtmlWebpackPlugin({
 		template: `src/index.ejs`,
-		inject: false,
+		hash: true,
+		inject: true,
 		cache: false,
 	}),
 ].filter(x => x)
@@ -60,20 +46,37 @@ const plugins = [
 module.exports = {
 	context: __dirname,
 
-	entry: [`./src/main.js`],
+	entry: [
+		'react-hot-loader/patch',
+		// activate HMR for React
+
+		'webpack-dev-server/client?http://localhost:8080',
+		// bundle the client for webpack-dev-server
+		// and connect to the provided endpoint
+
+		'webpack/hot/only-dev-server',
+		// bundle the client for hot reloading
+		// only- means to only hot reload for successful updates
+
+		`./src/main.js`
+	],
 
 	output: {
 		path: path.resolve(`public`),
 		filename: `bundle.js`,
+		publicPath: `/`
 	},
 
 	devServer: {
+		hot: true,
 		stats: `minimal`,
+		publicPath: `/`,
+		contentBase: path.resolve(`public`),
 	},
 
 	watch: ENV === Envs.DEV,
 
-	devtool: 'source-map',
+	devtool: 'inline-source-map',
 
 	module: {
 		rules: [
@@ -83,7 +86,7 @@ module.exports = {
 				include: [
 					path.resolve(__dirname, `src`),
 				],
-				loader: [`babel-loader`],
+				loader: [`react-hot-loader/webpack`, `babel-loader`],
 			},
 
 			// Styles
@@ -113,58 +116,6 @@ module.exports = {
 						}],
 					}),
 				include: path.resolve('src'),
-			},
-
-			// Fonts
-			{
-				test: /\.(woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/,
-				use: ASSET_FILE_LOADER,
-			},
-
-			// JSON & TSV files
-			{
-				test: /\.(json|tsv)$/,
-				loader: 'file-loader',
-				options: {
-					name: '[path][name].[ext]',
-				},
-			},
-
-			// Images
-			{
-				test: /\.(jpg|png)$/,
-				loader: 'file-loader',
-				options: {
-					name: '[path][name].[hash].[ext]',
-				},
-			},
-
-			// Config
-			{
-				test: /\.config$/,
-				use: {
-					loader: 'file-loader',
-					options: {
-						name: `[name].[ext]`,
-					},
-				},
-			},
-
-			// Dynamic pages
-			{
-				test: /\.aspx$/,
-				use: {
-					loader: 'file-loader',
-					options: {
-						name: `[name].[ext]`,
-					},
-				},
-			},
-		],
-		loaders: [
-			{
-				include: /\.json$/,
-				loaders: ['json-loader'],
 			},
 		],
 	},

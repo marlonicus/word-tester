@@ -1,5 +1,6 @@
 import { PropTypes } from 'mobx-react'
 import { Component } from 'react'
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 import AnswerButton from '../../atoms/answer-button'
 
@@ -13,7 +14,14 @@ export default class Answers extends Component {
 	render() {
 		const { answers } = this.props
 		return (
-			<ul className={styles.root}>
+			<CSSTransitionGroup
+				transitionName={`answers`}
+				className={styles.root}
+				component={`ul`}
+				transitionAppear={true}
+				transitionLeaveTimeout={550}
+				transitionAppearTimeout={550}
+				transitionEnter={false}>
 				{
 					answers.map(({ text, correct }, index) => (
 						<li key={`${text}${index}`} className={styles.answer}>
@@ -24,7 +32,7 @@ export default class Answers extends Component {
 						</li>
 					))
 				}
-			</ul>
+			</CSSTransitionGroup>
 		)
 	}
 }

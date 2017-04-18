@@ -13,7 +13,6 @@ export default class QuizStore {
 	@observable testedWords = []
 	@observable answers = []
 	@observable score = 0
-	@observable showFlash = false
 	@observable isLoading = true
 
 	constructor() {
@@ -32,12 +31,16 @@ export default class QuizStore {
 			word: this.currentWord,
 		})
 
-		this.showFlash = true
+		this.showFlash()
 		this.score += correct ? 1 : 0
 	}
 
 	@action hideFlash() {
-		this.showFlash = false
+		this.ui.shouldShowFlash = false
+	}
+
+	@action showFlash() {
+		this.ui.shouldShowFlash = true
 	}
 
 	@computed get question() {

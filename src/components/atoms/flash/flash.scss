@@ -1,10 +1,11 @@
+@import "variables/easing";
 @import "variables/colors";
 
 :local {
 	.root {
 		position: absolute;
-		bottom: 0;
-		transform: translateY(100%);
+		bottom: 20px;
+		top: 20px;
 		padding: 20px;
 		border-radius: 20px;
 		width: calc(100% - 40px);
@@ -12,7 +13,10 @@
 		right: 0;
 		margin: 0 auto;
 		text-align: center;
-		transition: opacity 0.1s, transform 0.1s;
+		z-index: 10;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
 	}
 
 	.correct {
@@ -25,6 +29,7 @@
 		composes: root;
 		color: $color2;
 		background: $color4;
+		display: block;
 	}
 
 	.show {
@@ -43,4 +48,31 @@
 		letter-spacing: 0.9px;
 		margin-bottom: 20px;
 	}
+}
+
+.flash {
+	transform-origin: center center;
+	animation: none;
+}
+
+.flash-appear,
+.flash-enter {
+	@extend .flash;
+	transition: transform 350ms $ease-out-back;
+	transform: scale(0);
+}
+
+.flash-appear-active,
+.flash-enter-active {
+	transform: scale(1);
+}
+
+.flash-leave {
+	@extend .flash;
+	transform: scale(1);
+}
+
+.flash-leave-active {
+	transition: transform 300ms $ease-in-back;
+	transform: scale(0);
 }

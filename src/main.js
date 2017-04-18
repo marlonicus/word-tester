@@ -5,5 +5,20 @@ import 'whatwg-fetch'
 global.React = require('react')
 global.ReactDOM = require('react-dom')
 
-require('./styles/main.scss')
-require('./app.js')
+import renderApp from './app.js'
+import QuizStore from './stores/quiz'
+
+const containerNode = document.getElementById(`container`)
+const quizStore = new QuizStore()
+
+function render() {
+	ReactDOM.render(renderApp({ quizStore }), containerNode)
+}
+
+if (module.hot) {
+	module.hot.accept('./app.js', () => {
+		render()
+	})
+}
+
+render()

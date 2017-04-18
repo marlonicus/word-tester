@@ -1,3 +1,5 @@
+@import "variables/easing";
+
 :local {
 	.root {
 		display: flex;
@@ -13,4 +15,22 @@
 			flex-basis: 50%;
 		}
 	}
+}
+
+.answers-appear {
+	transition: transform 500ms 50ms $ease-out-back;
+	transform: scale(0);
+}
+
+.answers-appear-active {
+	transform: scale(1);
+}
+
+.answers-leave {
+	transition: transform 500ms 50ms $ease-out-back;
+	transform: scale(1);
+}
+
+.answers-leave-active {
+	transform: scale(0);
 }
